@@ -1,6 +1,7 @@
+import Nimble
 import XCTest
 
-class Spec: XCTestCase {
+class Spec: XCTestCase, Nimble.AssertionHandler {
     private var test : String!
     private var function: String!
     private var logString : String = ""
@@ -16,6 +17,12 @@ class Spec: XCTestCase {
         self.log("\(self.test) : FAILURE :\(allMessages)", file: file, line: line)
     }
 
+    func assert(_ assertion: Bool, message: Nimble.FailureMessage, location: Nimble.SourceLocation) {
+      if !assertion {
+        fail(messages: [message.stringValue], location.file.description, location.line, true)
+      }
+    }
+
     // MARK: Echo information during the test if verbose is set to true
     var verbose = false
     func log(_ s: @autoclosure () -> String, file: String = #file, line: UInt = #line) {
@@ -26,12 +33,20 @@ class Spec: XCTestCase {
         }
     }
 
+    // The Nimble matcher framework calls on an assertion handler.  Set it as
+    // self for now:
+    var cachedAssertionHandler: Nimble.AssertionHandler!
+    override func setUp() {
+      cachedAssertionHandler = NimbleAssertionHandler
+      NimbleAssertionHandler = self
+    }
+
     // This is overridden from XCTest.  It's called at the end of every method.
     override func tearDown() {
         var str = ""
         str += "\n\n"
         str += "****************************************************************************\n"
-        str += "\(#file)\nSummary of call to \(self.function)\n\n\(self.logString)\n"
+        str += "\(#file)\nSummary of call to \(self.function ?? "")\n\n\(self.logString)\n"
         str += "End of summary for call to \(self.function)\n"
         str += "****************************************************************************\n"
         str += "\n\n"
@@ -40,6 +55,7 @@ class Spec: XCTestCase {
 
         self.logString = ""
         self.test = ""
+        NimbleAssertionHandler = cachedAssertionHandler
     }
 
     // MARK: Helpers for more rspec-like tests

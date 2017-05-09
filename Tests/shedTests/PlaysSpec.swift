@@ -3,6 +3,8 @@ import Nimble
 
 class PlaysSpec : Spec {
   func test() {
-    expect(3).to(equal(2))
+    it("fails this test") {
+      expect(3).to(equal(2))
+    }
   }
 }
