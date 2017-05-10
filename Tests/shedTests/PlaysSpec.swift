@@ -67,7 +67,7 @@ class PlaysSpec : Spec {
         .map { ($0, $0 + 1) }
         .map { (Card(rawValue: $0.0)!, Card(rawValue: $0.1)!) }
         .forEach { card0, card1 in
-          it("returns \(card1) when \(card0) is on the pile") {
+          it("allows \(card1) to be played on \(card0)") {
             let x = plays(forHand: [card1], onPile: [card0])
             expect(plays: x, toContain: [card1])
           }
@@ -79,7 +79,7 @@ class PlaysSpec : Spec {
         .filter({ $0 != 9 })
         .flatMap(Card.init)
         .forEach { card in
-          it("returns \(card) when \(card) is on the pile") {
+          it("allows \(card) to be played on \(card)") {
             let x = plays(forHand: [card], onPile: [card])
             expect(plays: x, toContain: [card])
           }
