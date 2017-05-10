@@ -104,11 +104,21 @@ class PlaysSpec : Spec {
 
       it("returns all combinations when a hand includes multiple of the same card") {
         let hand = [2, 2, 2, 2].flatMap(Card.init)
-        let x: [[Card]] = plays(forHand: hand, onPile: [.ace])
+        let x = plays(forHand: hand, onPile: [.ace])
         expect(plays: x, toContain: [.two])
         expect(plays: x, toContain: [.two, .two])
         expect(plays: x, toContain: [.two, .two, .two])
         expect(plays: x, toContain: [.two, .two, .two, .two])
+      }
+
+      it("returns all combinations in a complex scenario") {
+        let hand = [2, 2, 11, 11, 14].flatMap(Card.init)
+        let x = plays(forHand: hand, onPile: [.five])
+        expect(plays: x, toContain: [.two])
+        expect(plays: x, toContain: [.two, .two])
+        expect(plays: x, toContain: [.jack])
+        expect(plays: x, toContain: [.jack, .jack])
+        expect(plays: x, toContain: [.ace])
       }
     //}
   }
