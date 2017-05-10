@@ -2,8 +2,8 @@ import Nimble
 import XCTest
 
 class Spec: XCTestCase, Nimble.AssertionHandler {
-    private var test : String!
-    private var function: String!
+    private var test : String?
+    private var function: String?
     private var logString : String = ""
     private var beforeBlock: ((Void) -> Void)?
     private var afterBlock: ((Void) -> Void)?
