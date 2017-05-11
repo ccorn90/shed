@@ -1,0 +1,18 @@
+{
+  "autoPin": true,
+  "pins": [
+    {
+      "package": "Nimble",
+      "reason": null,
+      "repositoryURL": "https://github.com/Quick/Nimble",
+      "version": "7.0.0"
+    },
+    {
+      "package": "Spec",
+      "reason": null,
+      "repositoryURL": "https://github.com/ccorn90/Spec.git",
+      "version": "0.1.0"
+    }
+  ],
+  "version": 1
+}
