@@ -2,7 +2,7 @@ import Spec
 import Nimble
 @testable import shed
 
-class PlaysSpec : Spec {
+class CardMovesSpec : Spec {
     func testValidPlay() {
         describe("identity function for cards") {
             (2...14).flatMap(Card.init).forEach { card in
@@ -143,8 +143,8 @@ class PlaysSpec : Spec {
     }
 }
 
-func expect(plays: [[Card]], toContain: [Card]) {
-    let verified = plays.map { $0 == toContain }
+func expect(plays: [Move], toContain: [Card]) {
+    let verified = plays.map { $0.cards == toContain }
     expect(verified).to(contain(true), description: "\(plays) should contain \(toContain)")
 }
 

@@ -18,7 +18,7 @@ public func valid(play: Card, onCard: Card) -> Bool {
 }
 
 // Return all possible plays given hand and pile.  Top of pile is at the head of list.
-public func plays(forHand hand: [Card], onPile pile: [Card]) -> [[Card]] {
+public func plays(forHand hand: [Card], onPile pile: [Card]) -> [Move] {
     let topCard = pile.first
     let playableCards = hand.filter({ topCard == nil || valid(play: $0, onCard: topCard!) })
     let countedPlayableCards: [Card : Int] = playableCards.eachWithObject([:]) { hash, card in
@@ -26,7 +26,9 @@ public func plays(forHand hand: [Card], onPile pile: [Card]) -> [[Card]] {
     }
 
     return countedPlayableCards.reduce([]) { list, cardCount in
-        list + (1...cardCount.1).map { Array(repeating: cardCount.0, count: $0) }
+        list + (1...cardCount.1).map {
+            Move(Array(repeating: cardCount.0, count: $0))
+        }
     }
 }
 
