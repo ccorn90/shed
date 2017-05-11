@@ -27,7 +27,7 @@ public func valid(play: Card, onCard: Card) -> Bool {
         case .nine: return play.rawValue <= Card.nine.rawValue
 
         // compare based on the raw value:
-        default: return play.rawValue > onCard.rawValue
+        default: return play.rawValue >= onCard.rawValue
     }
 }
 
