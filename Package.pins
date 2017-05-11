@@ -6,12 +6,6 @@
       "reason": null,
       "repositoryURL": "https://github.com/Quick/Nimble",
       "version": "7.0.0"
-    },
-    {
-      "package": "Quick",
-      "reason": null,
-      "repositoryURL": "https://github.com/Quick/Quick",
-      "version": "1.0.0"
     }
   ],
   "version": 1
