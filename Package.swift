@@ -5,6 +5,6 @@ import PackageDescription
 let package = Package(
     name: "shed",
     dependencies: [
-        .Package(url: "https://github.com/Quick/Nimble", majorVersion: 7)
+        .Package(url: "https://github.com/ccorn90/Spec.git", majorVersion: 0)
     ]
 )

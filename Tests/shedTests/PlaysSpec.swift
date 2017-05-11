@@ -1,3 +1,4 @@
+import Spec
 import Nimble
 @testable import shed
 
