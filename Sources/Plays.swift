@@ -1,3 +1,5 @@
+import Swift_Language_Mods
+
 // Supercession logic for the Shed game:
 public func valid(play: Card, onCard: Card) -> Bool {
     // two can always be played:

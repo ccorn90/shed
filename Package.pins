@@ -12,6 +12,12 @@
       "reason": null,
       "repositoryURL": "https://github.com/ccorn90/Spec.git",
       "version": "0.1.0"
+    },
+    {
+      "package": "Swift-Language-Mods",
+      "reason": null,
+      "repositoryURL": "https://github.com/ccorn90/Swift-Language-Mods.git",
+      "version": "1.0.0"
     }
   ],
   "version": 1
