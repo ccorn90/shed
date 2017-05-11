@@ -14,7 +14,6 @@ class StateSpec : Spec {
             )
         }
 
-
         describe("#move on a state") {
             it("removes the cards of the move from the active player's hand") {
                 expect(move([.ace, .ace], state).activePlayerHand).to(
