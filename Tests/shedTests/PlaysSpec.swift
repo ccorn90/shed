@@ -3,9 +3,11 @@ import Nimble
 
 class PlaysSpec : Spec {
     func testValidPlay() {
-        (2...14).flatMap(Card.init).forEach { card in
-            it("\(card) may be played on itself") {
-                expect(valid(play: card, onCard: card)).to(beTruthy())
+        describe("identity function for cards") {
+            (2...14).flatMap(Card.init).forEach { card in
+                it("\(card) may be played on itself") {
+                    expect(valid(play: card, onCard: card)).to(beTruthy())
+                }
             }
         }
 
