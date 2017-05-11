@@ -1,6 +1,6 @@
 // A discrete state of the gameplay
 // note: for now, we're ignoring the special endgame conditions
-struct State {
+public struct State {
     let activePlayerHand: [Card]
     let otherPlayerHand: [Card]
 
