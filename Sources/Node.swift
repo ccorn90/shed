@@ -14,38 +14,56 @@ public indirect enum Node {
     case cannotPlay(State, Node?)
 }
 
-extension Node {
-    public mutating func computeChildren() {
-        // by using matchers on nil, we effectively cache the results
-        switch self {
-            // if the active player cannot play, the only option is to pick up
-            // the pile and play for the next turn
-            case .cannotPlay(let state, nil):
-                self = .cannotPlay(state, .play(pickUp(state), nil))
 
-            // a play node must calculate all the available moves and their
-            // results.  Either we cannot play, or we have a tree of options,
-            // some of which may be wins, the rest of which are plays.
-            case .play(let state, nil):
-                let moves = plays(forHand: state.activePlayerHand, onPile: state.pile)
-                if moves == [] {
-                    self = .cannotPlay(state, nil)  // TODO: compute this immediately?
-                } else {
-                    self = .play(state, moves.eachWithObject([:]) { hash, move in
-                        hash[move] = newNode(state, move)
-                    })
+public func describeTree(root: Node, depth: Int, indent: Int = 0) -> String {
+    guard depth > 0 else { return "no more data here" }
+    // Define some helpers:
+    var returnString = ""
+    let indentString = Array(repeating: " ", count: 4*indent).reduce("", +)
+    func line(_ str: String) {
+        returnString += "\n" + indentString + str
+    }
+
+   // switch root {
+   //     case .win(_): returnString += "W "
+   //     case .cannotPlay(_, _): returnString += "X "
+   //     case .play(_, _): returnString += "P "
+   // }
+
+    switch root {
+        case .win(let state):
+            returnString += "WIN : \(state.activePlayerHand)"
+
+        case .cannotPlay(let state, let node):
+            if let node = node {
+                returnString += indentString + "\n\(indentString)================================="
+                line("==> PICK UP PILE" + describeTree(root: node, depth: depth-1, indent: indent))
+
+            } else {
+                returnString += indentString + "\n\(indentString)================================="
+                line("==> PICK UP PILE : next node not yet computed")
+            }
+
+        case .play(let state, let hash):
+            returnString += indentString + "\n\(indentString)== \((hash?.count).map(String.init) ?? "?") moves available ======="
+            if let hash = hash {
+                var oneline = false
+                var index = 0
+                hash.forEach { move, node in
+                    if oneline == false {
+                        oneline = true
+                    } else {
+                        line("")
+                    }
+
+                    line("==> (\(index)) PLAY \(move.cards) : " + describeTree(root: node, depth: depth-1, indent: indent+1))
+                    index = index + 1
                 }
-
-            default: break
-        }
+            } else {
+                line("no more data here")
+            }
     }
-}
 
-public func newNode(_ state: State, _ m: Move) -> Node {
-    let afterMoveState = move(m, state)
-    if afterMoveState.activePlayerHand == [] {
-        return .win(afterMoveState)
-    } else {
-        return .play(nextPlayer(draw(afterMoveState)), nil)
-    }
+
+    return returnString
 }

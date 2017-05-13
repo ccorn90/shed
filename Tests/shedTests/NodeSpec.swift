@@ -12,8 +12,8 @@ class NodeSpec : Spec {
         )
 
         print("***********************************")
-        var node = newNode(state, [.three])
-        node.computeChildren()
-        print(node)
+        let node = compute(newNodeByPlaying(state, [.three]), depth: 12)
+        print(describeTree(root: node, depth: 7))
+        print("\n\n\n\n")
     }
 }
